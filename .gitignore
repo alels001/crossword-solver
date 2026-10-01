@@ -1,0 +1,32 @@
+# Data and intermediate results
+uploaded_images/
+results/
+results_deskew/
+results_warp/
+results_grid/
+*.npz
+*.npy
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+*.key
