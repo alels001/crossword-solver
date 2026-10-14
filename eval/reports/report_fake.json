@@ -1,0 +1,161 @@
+{
+  "end_to_end": [
+    {
+      "puzzle": "puzzle_01",
+      "provider": "fake",
+      "model": "fake-llm",
+      "use_agent": true,
+      "kb_records": 407,
+      "kb_removed_for_holdout": 0,
+      "entry_accuracy": 0.0,
+      "letter_accuracy": 0.0,
+      "fill_rate": 0.0,
+      "precision_filled": 0.0,
+      "latency_s": 0.06,
+      "llm_calls": 26,
+      "input_tokens": 11312,
+      "output_tokens": 104,
+      "cost_usd": 0.0,
+      "cache_hits": 0,
+      "timings_ms": {
+        "candidates": 57.1,
+        "csp": 0.2,
+        "refine": 0.0
+      },
+      "errors": {
+        "E01": {
+          "pred": "__________",
+          "gold": "GARTENHAUS"
+        },
+        "E02": {
+          "pred": "_______",
+          "gold": "ABREGEN"
+        },
+        "E03": {
+          "pred": "____",
+          "gold": "RAUM"
+        },
+        "E04": {
+          "pred": "_________",
+          "gold": "TRIMMTRAB"
+        },
+        "E05": {
+          "pred": "_____",
+          "gold": "AETNA"
+        },
+        "E06": {
+          "pred": "_____",
+          "gold": "HOEHE"
+        },
+        "E07": {
+          "pred": "_______",
+          "gold": "AEROBIC"
+        },
+        "E08": {
+          "pred": "____",
+          "gold": "JUST"
+        },
+        "E09": {
+          "pred": "____",
+          "gold": "BART"
+        },
+        "E10": {
+          "pred": "____",
+          "gold": "OESE"
+        },
+        "E11": {
+          "pred": "________",
+          "gold": "RUINIERT"
+        },
+        "E12": {
+          "pred": "____",
+          "gold": "NAHT"
+        },
+        "E13": {
+          "pred": "____",
+          "gold": "EMMA"
+        },
+        "E14": {
+          "pred": "________",
+          "gold": "BALINESE"
+        },
+        "E15": {
+          "pred": "___",
+          "gold": "RAH"
+        },
+        "E16": {
+          "pred": "______",
+          "gold": "HERTHA"
+        },
+        "E17": {
+          "pred": "_______",
+          "gold": "ROSETTE"
+        },
+        "E18": {
+          "pred": "_____",
+          "gold": "BEBRA"
+        },
+        "E19": {
+          "pred": "___",
+          "gold": "IAH"
+        },
+        "E20": {
+          "pred": "_________",
+          "gold": "NORDLICHT"
+        },
+        "E21": {
+          "pred": "______",
+          "gold": "KLEBEN"
+        },
+        "E22": {
+          "pred": "____",
+          "gold": "LAUF"
+        },
+        "E23": {
+          "pred": "____",
+          "gold": "EPOS"
+        },
+        "E24": {
+          "pred": "__",
+          "gold": "PE"
+        },
+        "E25": {
+          "pred": "______",
+          "gold": "MUTLOS"
+        },
+        "E26": {
+          "pred": "_____",
+          "gold": "FERSE"
+        }
+      }
+    }
+  ],
+  "solver_robustness": {
+    "runs": 10,
+    "p_gold": 0.85,
+    "distractors_per_entry": 14,
+    "mean": {
+      "gold_in_candidates": 0.8231,
+      "seconds": 1.9374,
+      "entry_accuracy": 0.7962,
+      "letter_accuracy": 0.8952,
+      "fill_rate": 0.8769,
+      "precision_filled": 0.9048
+    }
+  },
+  "prompts": {
+    "ocr_clue": [
+      1
+    ],
+    "candidates": [
+      1,
+      2
+    ],
+    "agent": [
+      1
+    ],
+    "assistant_chat": [
+      1
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+name: AI code review
+
+# Advisory LLM review posted as a PR comment. Runs only when an API key secret is configured,
+# never on forks (secrets are unavailable there), and never blocks merging.
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    if: github.event.pull_request.draft == false && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      CWS_LLM_PROVIDER: ${{ vars.CWS_LLM_PROVIDER || 'openai' }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      CWS_ENABLE_LLM_CACHE: "false"
+    steps:
+      - name: Check for API key
+        id: key
+        run: |
+          if [ -n "$OPENAI_API_KEY$ANTHROPIC_API_KEY" ]; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/checkout@v4
+        if: steps.key.outputs.ok == 'true'
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        if: steps.key.outputs.ok == 'true'
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Run review
+        if: steps.key.outputs.ok == 'true'
+        run: |
+          pip install -e ".[openai,anthropic]"
+          python tools/ai_review/review.py --base "origin/${{ github.base_ref }}" --head HEAD > review.md
+      - name: Post comment
+        if: steps.key.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr comment ${{ github.event.pull_request.number }} --body-file review.md --edit-last || gh pr comment ${{ github.event.pull_request.number }} --body-file review.md
