@@ -13,7 +13,7 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Protocol
+from typing import Any, Protocol
 
 import numpy as np
 
@@ -84,18 +84,18 @@ class Embedder(Protocol):
 
 
 class OpenAIEmbedder:
-    def __init__(self, model: str = "text-embedding-3-small", client: object | None = None) -> None:
+    def __init__(self, model: str = "text-embedding-3-small", client: Any = None) -> None:
         if client is None:
             from openai import OpenAI
 
             client = OpenAI()
-        self._client = client
+        self._client: Any = client
         self.model = model
 
     def embed(self, texts: list[str]) -> np.ndarray:
         vecs: list[list[float]] = []
         for i in range(0, len(texts), 256):
-            resp = self._client.embeddings.create(model=self.model, input=texts[i : i + 256])  # type: ignore[attr-defined]
+            resp = self._client.embeddings.create(model=self.model, input=texts[i : i + 256])
             vecs.extend(d.embedding for d in resp.data)
         arr = np.asarray(vecs, dtype=np.float32)
         return arr / np.clip(np.linalg.norm(arr, axis=1, keepdims=True), 1e-9, None)
