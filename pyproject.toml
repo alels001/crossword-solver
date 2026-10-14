@@ -1,0 +1,74 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "crossword-solver"
+version = "2.0.0"
+description = "GenAI system that solves German crossword puzzles from a photo: computer vision, vision-LLM OCR, RAG, a tool-using agent and a CSP solver."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Ali Elshafey" }]
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "opencv-python-headless>=4.8",
+  "imutils>=0.5.4",
+  "scikit-learn>=1.3",
+  "pydantic>=2.5",
+  "pydantic-settings>=2.1",
+  "requests>=2.31",
+  "beautifulsoup4>=4.12",
+  "typer>=0.12",
+  "rich>=13.0",
+]
+
+[project.optional-dependencies]
+openai = ["openai>=1.40"]
+anthropic = ["anthropic>=0.40"]
+api = ["fastapi>=0.110", "uvicorn[standard]>=0.29", "python-multipart>=0.0.9"]
+ui = ["streamlit>=1.50"]
+mcp = ["mcp>=2.0"]
+dev = [
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+  "httpx>=0.27",
+  "ruff>=0.6",
+  "mypy>=1.10",
+]
+all = ["crossword-solver[openai,anthropic,api,ui,mcp]"]
+
+[project.scripts]
+crossword = "crossword_solver.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/crossword_solver"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = ["live: calls real LLM APIs (skipped unless RUN_LIVE_TESTS=1)"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["E501", "RUF001", "RUF002", "RUF003", "RUF005", "B905"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/crossword_solver/cli.py" = ["B008"]  # typer declares options via defaults
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+warn_unused_ignores = true
+files = ["src/crossword_solver"]
+exclude = ["src/crossword_solver/vision/"]
+
+[tool.coverage.run]
+source = ["crossword_solver"]
+omit = ["*/vision/*", "*/serving/ui.py"]

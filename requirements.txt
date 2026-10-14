@@ -1,9 +1,3 @@
-numpy>=1.24
-pandas>=2.0
-opencv-python-headless>=4.8
-imutils>=0.5.4
-matplotlib>=3.7
-requests>=2.31
-beautifulsoup4>=4.12
-ipywidgets>=8.0
-openai>=1.0
+# Runtime dependencies (the canonical list lives in pyproject.toml).
+# For development prefer:  pip install -e ".[all,dev]"
+-e .[all]

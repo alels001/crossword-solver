@@ -30,3 +30,11 @@ Thumbs.db
 # Secrets
 .env
 *.key
+
+# Runtime caches
+.cache/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+review.md
