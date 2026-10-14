@@ -1,0 +1,9 @@
+.git
+.venv
+.cache
+**/__pycache__
+notebooks
+docs/presentation.pptx
+figures
+eval/reports
+.env
